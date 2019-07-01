@@ -6,7 +6,7 @@ Location on Uppmax: /proj/sllstore2017033/nobackup/work/jente/Reference_Genome/a
 
 More information about this genome at NCBI: https://www.ncbi.nlm.nih.gov/assembly/GCF_000971095.1
 
-
+&nbsp;
 
 **Make index for reference genome**
 
