@@ -11,11 +11,12 @@ Make index for reference genome
 
 $ samtools faidx ansCyg.fa
 
-Make temporary directory to store files
-
-$ mkdir
-
 Go to sample directory (= input when running bash-script)
 
 $ cd $1
 
+Make temporary directory and copy fastq-files to workplace for analyses
+
+$ mkdir /proj/sllstore2017033/nobackup/work/jente/temp_$ind
+
+$ cp \*.gz /proj/sllstore2017033/nobackup/work/jente/temp_$ind
