@@ -48,6 +48,8 @@ $ samtools flagstat $ind.bam >$ind.stats.txt
 
 $ mv \*.bam /proj/sllstore2017033/nobackup/work/jente/BAM_Files
 
+&nbsp;
+
 ## 2. Marking duplicates with PICARD (version 2.10.3)
 
 $ filename=$1
