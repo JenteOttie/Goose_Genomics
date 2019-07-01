@@ -24,7 +24,7 @@ $ cp \*.gz /proj/sllstore2017033/nobackup/work/jente/temp_$ind
 
 **Go to work-directory and unzip files**
 
-$cd /proj/sllstore2017033/nobackup/work/jente/temp_$ind
+$ cd /proj/sllstore2017033/nobackup/work/jente/temp_$ind
 
 $ \gunzip *.gz
 
@@ -36,7 +36,7 @@ $ fq1=\*R1_001.fastq
 
 $ fq2=\*R2_001.fastq
 
-**Run BWA (version 0.7.17)**
+**Run BWA (version 0.7.17) and output BAM-file**
 
 $ bwa mem -R "@RG\tID:$ind\tSM:$ind\tLB:$ind\tPI:350\tPL:Illumina" -t 20 -M $ref $fq1 $fq2 | samtools sort -T $SNIC_TMP/$ind - >$ind.bam.tmp && mv $ind.bam.tmp $ind.bam
 
