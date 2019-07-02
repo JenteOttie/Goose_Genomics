@@ -9,7 +9,7 @@ First a fastq-file is generated with samtools mpileup. The reading depth is set 
 
 $ samtools mpileup -uf $fasta $1 | bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 100 >$ind.fq
 
-Then the fastq-file to fasta (one-liner based on https://www.biostars.org/p/85929/)
+Then the fastq-file is converted to fasta (one-liner based on https://www.biostars.org/p/85929/)
 
 $ cat $ind.fq | paste - - - - | sed 's/^@/>/g'| cut -f1-2 | tr '\t' '\n' >$ind.fa
 
