@@ -1,4 +1,4 @@
-# Phylogenetic Pipeline to Reconstruct the Goose Phylogeny
+# Pipeline to Reconstruct the Goose Phylogeny
 
 ## 1. Make fasta-file for each sample
 
