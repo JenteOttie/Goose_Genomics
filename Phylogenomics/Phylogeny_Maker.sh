@@ -16,7 +16,7 @@
 
 # Make input-file (fasta)
 python Make_Fasta_for_Phylogeny.py
-echo 'Made input-file (fasta) for phylogenetic analyses)'
+echo 'Made input-file (fasta) for phylogenetic analyses'
 date
 
 # Align sequences
