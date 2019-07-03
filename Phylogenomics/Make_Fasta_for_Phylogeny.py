@@ -10,9 +10,37 @@
 ##############################################
 
 # Determine window to extract
-scaffold = "NW_013185654.1"
-start = 1000
-end = 2000
+# Choose window manually
+#scaffold = "NW_013185654.1"
+#start = 1000
+#end = 2000
+
+# Pick random window
+from random import randint
+import os
+import sys
+
+Number_of_Scaffolds = sum(1 for line in open('Anser_genomeFile.txt')) # Count number of scaffolds in file
+
+Scaffold_Length = 0
+while Scaffold_Length < 20000: # Make sure the scaffold is at least 20kb long
+        X = randint(0,Number_of_Scaffolds) # Generate random number
+
+        Random_Line =  open("Anser_genomeFile.txt", "r").readlines()[X] # Extract random line from file
+
+        scaffold = Random_Line.split()[0].strip() # Get scaffold name, make sure to use .strip() to remove any whitespaces
+        Scaffold_Length = int(Random_Line.split()[1]) # Get length of scaffold
+
+print("Found scaffold " + scaffold + " with length of " + str(Scaffold_Length) + " bp")
+
+# Determining start and end position of window based on midpoint
+# Because I wil work with 10kb windows, there is a margin of 5kb on both end
+# So I will choose a random number from 5000 to (Scaffold_Length - 5000) and then add 5kb on both sides
+Midpoint = randint(5000, Scaffold_Length-5000)
+start = Midpoint - 5000
+end = Midpoint + 5000
+
+print("Selected random window on scaffold " + scaffold + " from " + str(start) + " to " + str(end))
 
 # Set threshold for number of Ns (in percentage)
 N_threshold = 25
@@ -31,22 +59,23 @@ for sample in List_of_samples:
         Output_file = open("Raw_Sequences.fa", "a")
 
         sequence = ""
+        name = ""
         for line in Input_file:
                 if ">" in line:
                         header = line
                         if scaffold in header:
                                 name = ">" + sample + "\n"
-                                Output_file.write(name)
                 else:
                         if scaffold in header:
                                 sequence = sequence + line.strip() # Save DNA-sequence in string while header equals scaffold
+
         print("Saved scaffold " + scaffold + " sequence. Now extracting window.\n")
 
         # Extract specified window from DNA-sequence
-        window = sequence[start:end] + "\n"
+        window = sequence[start:end].upper() + "\n"
 
         # Count number of Ns and discard window if bigger than threshold
-        Number_of_Ns = window.count("n")
+        Number_of_Ns = window.count("N")
         Percentage_of_Ns = Number_of_Ns / float(len(window)) *100
         print("The percentage of Ns in this string is " + str(round(Percentage_of_Ns,2)) + "%")
 
@@ -54,6 +83,7 @@ for sample in List_of_samples:
                 print("Too many Ns, discarding sequence")
         else:
                 print("Saving sequence\n***************\n")
+                Output_file.write(name)
                 Output_file.write(window)
 
         Input_file.close()
