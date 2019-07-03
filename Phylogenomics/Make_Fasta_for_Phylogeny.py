@@ -34,7 +34,7 @@ while Scaffold_Length < 20000: # Make sure the scaffold is at least 20kb long
 print("Found scaffold " + scaffold + " with length of " + str(Scaffold_Length) + " bp")
 
 # Determining start and end position of window based on midpoint
-# Because I wil work with 10kb windows, there is a margin of 5kb on both end
+# Because I wil work with 10kb windows, there is a margin of 5kb on both ends
 # So I will choose a random number from 5000 to (Scaffold_Length - 5000) and then add 5kb on both sides
 Midpoint = randint(5000, Scaffold_Length-5000)
 start = Midpoint - 5000
