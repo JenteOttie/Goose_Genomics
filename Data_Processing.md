@@ -86,7 +86,7 @@ $ java -Xmx60g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK_HOME/GenomeAnalysisTK.jar -
 
 ## 4. Base Quality Score Recalibration (BQSR) with GATK (version 3.7)
 
-Normally, you would use a set of high quality SNPs to do the BQSR. Because this is not available for geese, I will perform a bootstrapping approach. This strategy is explained in more detail at the [GATK website](https://software.broadinstitute.org/gatk/documentation/article?id=11081)
+Normally, you would use a set of high quality SNPs to do the BQSR. Because this is not available for geese, I will perform a bootstrapping approach. This strategy is explained in more detail at the [GATK website](https://software.broadinstitute.org/gatk/documentation/article?id=11081). This is done on an indidivual level.
 
 **Set file locations and names**
 
@@ -106,7 +106,7 @@ $ VCF=$ind.raw.snps.indels.vcf
 
 $ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T SelectVariants -R $fasta -V $VCF -selectType SNP -select "MQRankSum<-0.2 && DP>10" -o $ind.recal.vcf
 
-**Make Recalibration Tables**
+**Make recalibration tables**
 
 $ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T BaseRecalibrator -R $fasta -I $BAM -knownSites $ind.recal.vcf -nct 20 -o $ind.recal1.table
 
@@ -121,3 +121,35 @@ $ java -jar $GATK -T AnalyzeCovariates -R $fasta -before $ind.recal1.table -afte
 $ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T PrintReads -R $fasta -I $BAM -BQSR $ind.recal2.table -nct 20 -o BQRS_PDF/$ind.recal.realn.marked.bam
 
 $ mv $ind.recal.realn.marked.b* BAM_Files/
+
+&nbsp;
+
+## 5. Joint genotyping
+
+All individual VCF-file are combined in one file using the function GenotypeGVCFs
+
+$ java -Xmx7g -jar $GATK -T GenotypeGVCFs -R $fasta \
+--variant [ind1] \
+--variant [ind2] \
+...
+-o [output.vcf]
+
+&nbsp;
+
+## 6. Apply hard-filter to VCF-file
+
+**Set file locations and names**
+
+$ filename=$1
+
+$ ind=$(basename $filename .vcf)
+
+$ fasta=/proj/sllstore2017033/nobackup/work/jente/Reference_Genome/ansCyg.fa
+
+**Extract SNPs from file**
+java -Xmx6g -jar $GATK -T SelectVariants -R $fasta -V $1 -selectType SNP -o $ind.SNPs.vcf
+
+**Run hard SNP filter on VCF-file - Setting based on GATK best practises**
+
+$ java -Xmx6g -jar $GATK -T VariantFiltration -R $fasta -V $ind.SNPs.vcf --filterExpression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" --filterName "hard_filt" -o $ind.SNPs.HardFilt.vcf
+
