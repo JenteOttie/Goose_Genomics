@@ -57,3 +57,25 @@ $ filename=$1
 $ ind=$(basename $filename .bam)
 
 $ java -jar $PICARD_HOME/picard.jar MarkDuplicates I=$1 O=$ind.marked.bam METRICS_FILE=$ind.marked.metrics REMOVE_DUPLICATES=false ASSUME_SORTED=true
+
+## 3. Local Realignment with GATK (version 3.7)
+
+**Set file locations and names**
+
+$ filename=$1
+
+$ ind=$(basename $filename .marked.bam)
+$ fasta=/proj/sllstore2017033/nobackup/work/jente/Reference_Genome/ansCyg.fa
+
+** Create index of Bam-file **
+
+$ samtools index $1
+
+**make intervals**
+
+$ java -Xmx60g -jar $GATK_HOME/GenomeAnalysisTK.jar -T RealignerTargetCreator -I $1 -R $fasta -o $ind.intervals
+
+
+**realignment (this step cannot run in parallel)**
+$ java -Xmx60g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK_HOME/GenomeAnalysisTK.jar -T IndelRealigner -I $1 -R $fasta -targetIntervals $ind.intervals -o $ind.realn.marked.bam.tmp && mv $ind.realn.marked.bam.tmp $ind.realn.marked.bam && mv $ind.realn.marked.bam.tmp.bai $ind.realn.marked.bam.bai
+
