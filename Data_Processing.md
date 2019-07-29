@@ -82,3 +82,42 @@ $ java -Xmx60g -jar $GATK_HOME/GenomeAnalysisTK.jar -T RealignerTargetCreator -I
 
 $ java -Xmx60g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK_HOME/GenomeAnalysisTK.jar -T IndelRealigner -I $1 -R $fasta -targetIntervals $ind.intervals -o $ind.realn.marked.bam.tmp && mv $ind.realn.marked.bam.tmp $ind.realn.marked.bam && mv $ind.realn.marked.bam.tmp.bai $ind.realn.marked.bam.bai
 
+&nbsp;
+
+## 4. Base Quality Score Recalibration (BQSR) with GATK (version 3.7)
+
+Normally, you would use a set of high quality SNPs to do the BQSR. Because this is not available for geese, I will perform a bootstrapping approach. This strategy is explained in more detail at the [GATK website](https://software.broadinstitute.org/gatk/documentation/article?id=11081)
+
+**Set file locations and names**
+
+$ BAM=$1
+
+$ ind=$(basename $1 .realn.marked.bam)
+
+$ fasta=/proj/sllstore2017033/nobackup/work/jente/Reference_Genome/ansCyg.fa
+
+**Run GATK HaplotypeCaller**
+
+$ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T HaplotypeCaller -R $fasta -I $BAM -nct 20 -o $ind.raw.snps.indels.vcf
+
+$ VCF=$ind.raw.snps.indels.vcf
+
+**Extract SNPs with minimum depth of 10 (DP>10) and MQRankSum<-0.2 (based on script of Pall)**
+
+$ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T SelectVariants -R $fasta -V $VCF -selectType SNP -select "MQRankSum<-0.2 && DP>10" -o $ind.recal.vcf
+
+**Make Recalibration Tables**
+
+$ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T BaseRecalibrator -R $fasta -I $BAM -knownSites $ind.recal.vcf -nct 20 -o $ind.recal1.table
+
+$ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T BaseRecalibrator -R $fasta -I $BAM -knownSites $ind.recal.vcf -BQSR $ind.recal1.table -nct 20 -o $ind.recal2.table
+
+**Compare recalibration tables (output to PDF-file)**
+
+$ java -jar $GATK -T AnalyzeCovariates -R $fasta -before $ind.recal1.table -after $ind.recal2.table -plots $ind.BQSR.1vs2.pdf
+
+**Recalibrate BAM-file and move to BAM-folder**
+
+$ java -Xmx120g -Djava.io.tmpdir=$SNIC_TMP -jar $GATK -T PrintReads -R $fasta -I $BAM -BQSR $ind.recal2.table -nct 20 -o BQRS_PDF/$ind.recal.realn.marked.bam
+
+$ mv $ind.recal.realn.marked.b* BAM_Files/
