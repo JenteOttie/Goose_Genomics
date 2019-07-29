@@ -8,7 +8,7 @@ This pipeline is described in the [Data_Processing](https://github.com/JenteOtti
 
 ## Population Structure: PCA and Admixture
 
-To assess the population structure of the Bean Geese, I will make PCAs and Admixture plots using different settings to filter the SNPs generated in the previous step. The filtering will be done using Plink version X and VCFtools version 0.1.15.
+To assess the population structure of the Bean Geese, I will make PCAs and Admixture plots using different settings to filter the SNPs generated in the previous step. The filtering will be done using Plink version 1.07 and VCFtools version 0.1.15. The steps below show one example with settings for Hardy-Weinberg, MAF and LD.
 
 **Convert VCF-file to Plink-format**
 
