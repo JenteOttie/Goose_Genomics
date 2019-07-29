@@ -124,7 +124,7 @@ $ mv $ind.recal.realn.marked.b* BAM_Files/
 
 &nbsp;
 
-## 5. Joint genotyping
+## 5. Joint genotyping with GATK (version 3.7)
 
 All individual VCF-file are combined in one file using the function GenotypeGVCFs
 
@@ -136,7 +136,7 @@ $ java -Xmx7g -jar $GATK -T GenotypeGVCFs -R $fasta \
 
 &nbsp;
 
-## 6. Apply hard-filter to VCF-file
+## 6. Apply hard-filter to VCF-file with GATK (version 3.7)
 
 **Set file locations and names**
 
@@ -152,6 +152,8 @@ java -Xmx6g -jar $GATK -T SelectVariants -R $fasta -V $1 -selectType SNP -o $ind
 **Run hard SNP filter on VCF-file - Setting based on GATK best practises**
 
 $ java -Xmx6g -jar $GATK -T VariantFiltration -R $fasta -V $ind.SNPs.vcf --filterExpression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" --filterName "hard_filt" -o $ind.SNPs.HardFilt.vcf
+
+&nbsp;
 
 ## 7. Downstream analyses
 
