@@ -131,7 +131,7 @@ All individual VCF-file are combined in one file using the function GenotypeGVCF
 $ java -Xmx7g -jar $GATK -T GenotypeGVCFs -R $fasta \
 --variant [ind1] \
 --variant [ind2] \
-...
+... \
 -o [output.vcf]
 
 &nbsp;
@@ -153,3 +153,6 @@ java -Xmx6g -jar $GATK -T SelectVariants -R $fasta -V $1 -selectType SNP -o $ind
 
 $ java -Xmx6g -jar $GATK -T VariantFiltration -R $fasta -V $ind.SNPs.vcf --filterExpression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" --filterName "hard_filt" -o $ind.SNPs.HardFilt.vcf
 
+## 7. Downstream analyses
+
+The final VCF-file can be used for further analyses. Different filtering steps will be applied depending on the analysis.
