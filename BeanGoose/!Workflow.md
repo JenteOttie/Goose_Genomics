@@ -16,7 +16,7 @@ vcftools --vcf BeanGoose.SNPs.HardFilt.vcf --plink --out BeanGoose
 ```
 **Make binary ped-files (bed)**
 ```
-plink –file BeanGoose –make-bed –out BeanGoose
+plink –file BeanGoose --make-bed –-out BeanGoose
 ```
 **Filter file on Hardy-Weinberg (0.01) and minor allele frequencies (0.05)**
 ```
