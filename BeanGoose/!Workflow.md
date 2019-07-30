@@ -24,7 +24,19 @@ $ plink --bfile BeanGoose --hwe 0.01 --maf 0.05 --make-bed --out BeanGooseFilter
 
 **Prune samples based on linkage disequilibrium (sliding window of 50 SNPs, shifting 10 at a time with a R2 threshold of 0.05)**
 
+Because Plink cannot work with too many scaffolds, I will first change all scaffolds to 1.
+
+$ awk '$1="1"' $file\HWE_MAF.bim >temp.bim # Change scaffold column to 1
+
+$ rm $file_HWE_MAF\.bim # Remove old bim-file
+
+$ mv temp.bim $file_HWE_MAF\.bim # Change name of temporary bim-file
+
+Now everything is read to calculate LD for all the SNPs and prune them
+
 $ plink --bfile BeanGooseFiltered --indep-pairwise 50 10 0.05 --make-bed --out BeanGooseFiltered
+
+$ plink --bfile BeanGooseFiltered --extract $BeanGooseFiltered.in --make-bed --out BeanGooseFiltered
 
 **Make PCA**
 
