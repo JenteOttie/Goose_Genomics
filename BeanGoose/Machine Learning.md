@@ -36,9 +36,44 @@ The parameters are listed below. All numbers are based on the demographic model 
 The input data for FILET consists of fasta-files for all populations and a bed-file with the coordinates of the windows to be analyzed.
 First, I create the bed-file. This is done using a csv-file that I generated in the window-analyses (using the scripts by Simon Martin).
 ```
-cut -d "," -f 1,2,3 10kb.csv >Test.txt  # Extract first three lines
-sed -i '1d' Test.txt 		                # Remove first line 
-sed -i -e 's/,/\t/g' Test.txt		        # Replace comma (,) with tab (\t)
+cut -d "," -f 1,2,3 10kb.csv >Test.txt    # Extract first three lines
+sed -i '1d' Test.txt 		                  # Remove first line 
+sed -i -e 's/,/\t/g' Test.txt		          # Replace comma (,) with tab (\t)
 ```
-Next, I make fasta- and bed-files for each scaffold using the python-script [Prepare_Fasta_for_ML.py].
+Next, I make fasta- and bed-files for each scaffold using the python-script [Prepare_Fasta_for_ML.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/Prepare_Fasta_for_ML.py)
+
+&nbsp;
+
+## Training the machine learning algoritm
+Before I can analyse the data, I will need to train the algorithm with the simulated training sets. This is done using the python-scripts available in FILET. Because my server (UPPMAX) does not support some of the python packages, I first start a virtual environment where I can load and update my own python-packages.
+```
+source /home/jente/dadi/bin/activate
+```
+**Calculate summary statistics for simulated data (10kb windows)**
+```
+for inFile in `ls trainingSims/ | grep .msOut` ; do cat trainingSims/$inFile | ../FILET-master/twoPopnStats_forML 9 9 | python ../FILET-master/normalizeTwoPopnStats.py None 10000 >trainingSimsStats/$inFile; done
+```
+**Train classifier algorithm**
+```
+python buildThreeClassTrainingSet.py trainingSimsStats/ trainingSets/threeClass.fvec
+python trainFiletClassifier.py trainingSets/threeClass.fvec classifier/threeClass.p pi1 hetVar1 ss1 private1 tajd1 ZnS1 pi2 hetVar2 ss2 private2 tajd2 ZnS2 Fst dxy_mean dxy_min gmin zx dd1 dd2 ddRank1 ddRank2
+```
+
+&nbsp;
+
+## Classifying the data
+Now it is time to classify the data. I do this on a scaffold-level. Each scaffold has its own fasta- and bed-files.
+The results for each scaffold - summary stats and classification of windows - are saved in their own directory.
+```
+scaffold=$1                                   # Scaffold to classify
+mkdir featureVectorsToClassify/${scaffold}/   # Make directory to save summary stats
+mkdir results/${scaffold}/                    # Make directory to save results
+```
+**Calculate summary statistics on data**
+```
+/pgStatsBedSubpop_forML dataToClassify/${scaffold}_fabalis.fa dataToClassify/${scaffold}_rossicus.fa dataToClassify/${scaffold}_anc.fa dataToClassify/${scaffold}.bed 0.5 | python ../FILET-master/normalizePgStats.py 10000 >featureVectorsToClassify/${scaffold}/${scaffold}.ss
+```
+**Classify data**
+```
+python classifyChromosome.py classifier/threeClass.p featureVectorsToClassify/${scaffold}/ 0.05 results/${scaffold}/
 ```
