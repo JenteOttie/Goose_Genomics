@@ -26,11 +26,11 @@ $ plink --bfile BeanGoose --hwe 0.01 --maf 0.05 --make-bed --out BeanGooseFilter
 
 Because Plink cannot work with too many scaffolds, I will first change all scaffolds to 1.
 
-$ awk '$1="1"' $file\HWE_MAF.bim >temp.bim # Change scaffold column to 1
+$ awk '$1="1"' BeanGooseFiltered.bim >temp.bim # Change scaffold column to 1
 
-$ rm $file_HWE_MAF\.bim # Remove old bim-file
+$ rm BeanGooseFiltered.bim # Remove old bim-file
 
-$ mv temp.bim $file_HWE_MAF\.bim # Change name of temporary bim-file
+$ mv temp.bim BeanGooseFiltered.bim # Change name of temporary bim-file
 
 Now everything is read to calculate LD for all the SNPs and prune them
 
