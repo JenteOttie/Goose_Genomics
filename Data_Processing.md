@@ -9,19 +9,18 @@ More information about this genome at NCBI: https://www.ncbi.nlm.nih.gov/assembl
 &nbsp;
 
 **Make index for reference genome**
-
+```
 $ samtools faidx ansCyg.fa
-
+```
 **Go to sample directory (= input when running bash-script)**
-
+```
 $ cd $1
-
+```
 **Make temporary directory and copy fastq-files to workplace for analyses**
-
+```
 $ mkdir /proj/sllstore2017033/nobackup/work/jente/temp_$ind
-
 $ cp \*.gz /proj/sllstore2017033/nobackup/work/jente/temp_$ind
-
+```
 **Go to work-directory and unzip files**
 
 $ cd /proj/sllstore2017033/nobackup/work/jente/temp_$ind
