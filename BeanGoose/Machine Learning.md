@@ -36,9 +36,9 @@ The parameters are listed below. All numbers are based on the demographic model 
 The input data for FILET consists of fasta-files for all populations and a bed-file with the coordinates of the windows to be analyzed.
 First, I create the bed-file. This is done using a csv-file that I generated in the window-analyses (using the scripts by Simon Martin).
 ```
-cut -d "," -f 1,2,3 10kb.csv >Test.txt    # Extract first three lines
-sed -i '1d' Test.txt 		                  # Remove first line 
-sed -i -e 's/,/\t/g' Test.txt		          # Replace comma (,) with tab (\t)
+cut -d "," -f 1,2,3 10kb.csv >Test.txt      # Extract first three lines
+sed -i '1d' Test.txt 		                    # Remove first line 
+sed -i -e 's/,/\t/g' Test.txt		            # Replace comma (,) with tab (\t)
 ```
 Next, I make fasta- and bed-files for each scaffold using the python-script [Prepare_Fasta_for_ML.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/Prepare_Fasta_for_ML.py)
 
