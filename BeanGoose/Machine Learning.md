@@ -23,12 +23,12 @@ msmove 18 10000 -t 50 -I 2 9 9 -n 1 1.40176528 -n 2 0.6912292 -ma x 5.80351132 2
 msmove 18 10000 -t 0.1 -I 2 9 9 0.0001 -n 1 1.40176528 -n 2 0.6912292 -ev 0.14821583 1 2 0 >Nomig.txt
 ```
 The parameters are listed below. All numbers are based on the demographic model in the previous step.
-- t (theta)
-- I (number of populations) (samples in pop1) (samples in pop2)
--n 1 (size of pop1)
--n 2 (size of pop2)
--ma (matrix with migration rates)
--ev (time of migration) (source pop) (sink pop) (likelihood of migration event)
+- - t (theta)
+- - I (number of populations) (samples in pop1) (samples in pop2)
+- -n 1 (size of pop1)
+- -n 2 (size of pop2)
+- -ma (matrix with migration rates)
+- -ev (time of migration) (source pop) (sink pop) (likelihood of migration event)
 
 &nbsp;
 
