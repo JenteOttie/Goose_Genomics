@@ -17,13 +17,16 @@ LD_parameter=0.5
 ```
 
 **Load input-file**
-The input-file is a hard-filtered VCF-file. The filename should end on '..SNPs.HardFilt.vcf'.
+The input-file is a hard-filtered VCF-file. 
+
+The filename should end on '..SNPs.HardFilt.vcf'.
 ```
 file=$(basename $1 .SNPs.HardFilt.vcf)
 echo 'Loading file'
 ```
 
 **Convert VCF-file to Plink-format**
+
 The VCF-file is converted into Plink-format, only keeping biallelic SNPs.
 ```
 vcftools --vcf $file\.SNPs.HardFilt.vcf --plink --biallelic-only 'strict' --out $file
@@ -43,6 +46,7 @@ echo 'Filtered om Hardy-Weinberg and MAF'
 ```
 
 **Prune samples based on linkage disequilibrium (LD)**
+
 First, set all chromosomes to 1 in bim-file - Plink cannot work with too many scaffolds
 ```
 awk '$1="1"' $file\_HWE_MAF.bim >temp.bim # Change scaffold column to 1
