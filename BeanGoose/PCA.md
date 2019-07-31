@@ -29,7 +29,7 @@ echo 'Loading file'
 
 The VCF-file is converted into Plink-format, only keeping biallelic SNPs.
 ```
-vcftools --vcf $file\.SNPs.HardFilt.vcf --plink --biallelic-only 'strict' --out $file
+vcftools --vcf $file\.SNPs.HardFilt.vcf --plink --out $file
 echo 'Converted file to Plink-format'
 ```
 
