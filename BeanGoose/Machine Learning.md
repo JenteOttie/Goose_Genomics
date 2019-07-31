@@ -77,3 +77,10 @@ mkdir results/${scaffold}/                    # Make directory to save results
 ```
 python classifyChromosome.py classifier/threeClass.p featureVectorsToClassify/${scaffold}/ 0.05 results/${scaffold}/
 ```
+All these commands can be found in the script Run_ML_pipeline.sh. To run it on all scaffolds in parallel, I use this line of code.
+```
+cat ../Scaffolds.txt | while read line; do sbatch Run_ML_pipeline.sh $line; done
+```
+
+### Checking the results
+To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file getFeatureRankings.py. This outputs a table that ranks the summary stats and shows their contribution to the classification.
