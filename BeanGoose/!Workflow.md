@@ -14,7 +14,8 @@ This pipeline is described in the [Data_Processing](https://github.com/JenteOtti
 
 To assess the population structure of the Bean Geese, I will make PCAs and Admixture plots using different settings to filter the SNPs generated in the previous step. The filtering will be done using Plink version 1.07 and VCFtools version 0.1.15.
 
-The workflow for generating the PCA-plots can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/PCA.md).
+The workflow for generating the PCA-plots can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/PCA.md). 
+Changing the filtering parameters does not markedly influence the patterns in the PCA. With a more strict filtering (and thus less SNPs), the two species remain distinct. However, there is less structure within the species after strict filtering.
 
 The workflow for generating the Admixture-plots can be found here.
 
