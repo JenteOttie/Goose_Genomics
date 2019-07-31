@@ -17,9 +17,8 @@ LD_parameter=0.5
 ```
 
 **Load input-file**
-The input-file is a hard-filtered VCF-file. 
 
-The filename should end on '..SNPs.HardFilt.vcf'.
+The input-file is a hard-filtered VCF-file. The filename should end on '..SNPs.HardFilt.vcf'.
 ```
 file=$(basename $1 .SNPs.HardFilt.vcf)
 echo 'Loading file'
