@@ -82,5 +82,7 @@ All these commands can be found in the script Run_ML_pipeline.sh. To run it on a
 cat ../Scaffolds.txt | while read line; do sbatch Run_ML_pipeline.sh $line; done
 ```
 
-### Checking the results
-To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file getFeatureRankings.py. This outputs a table that ranks the summary stats and shows their contribution to the classification.
+&nbsp;
+
+## Checking the results
+To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file threeClass.p. This outputs a table that ranks the summary stats and shows their contribution to the classification.
