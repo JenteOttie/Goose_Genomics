@@ -134,4 +134,4 @@ Windows_file.close()
 output_1.close()
 output_2.close()
 ```
-Next, I can check which genes are in the introgressed windows, using the script [Genes_in_Windows.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/Genes_in_Windows.py).
+Next, I can check which genes are in the introgressed windows, using the script [Genes_in_Windows.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/Genes_in_Windows.py). This script takes two inputs: the file with the windows and a GFF-file with the gene coordinates (which can be found [here](https://www.ncbi.nlm.nih.gov/genome/?term=txid8845[orgn]) for the goose genome).
