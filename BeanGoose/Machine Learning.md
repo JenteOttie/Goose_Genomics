@@ -86,3 +86,8 @@ cat ../Scaffolds.txt | while read line; do sbatch Run_ML_pipeline.sh $line; done
 
 ## Checking the results
 To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file threeClass.p. This outputs a table that ranks the summary stats and shows their contribution to the classification.
+
+The results for the different scaffolds have been saved in separate folders. To collect all the results in one file, just loop through the folders and extract the results.
+```
+for f in results/NW_01318*/* ; do cat $f >>Results.txt ; done
+```
