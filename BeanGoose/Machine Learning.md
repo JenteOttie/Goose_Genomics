@@ -85,7 +85,7 @@ cat ../Scaffolds.txt | while read line; do sbatch Run_ML_pipeline.sh $line; done
 &nbsp;
 
 ## Checking the results
-To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file threeClass.p. This outputs a table that ranks the summary stats and shows their contribution to the classification.
+To see which summary statistics were most important in classifying the windows, I run the python-script [getFeatureRankings.py](https://github.com/kern-lab/FILET/blob/master/getFeatureRankings.py) (written by Dan Schrider) on the file threeClass.p. This outputs a table that ranks the summary stats and shows their contribution to the classification. 
 
 **Collecting the results**
 
@@ -104,3 +104,33 @@ The results-file contains the following information (in separate columns)
 8. The posterior probability of class two
 
 **Analyzing the results**
+
+The number of windows per class can be calculated using this short Python-script (Sort_Introgressed_Windows.py)
+```Python
+import sys
+
+# Open input and output-files
+Windows_file = open(sys.argv[1], "r")
+output_1 = open("Introgression_Class1.txt", "a")
+output_2 = open("Introgression_Class2.txt", "a")
+
+for line in Windows_file:
+	# extract information about window and introgression class
+	scaffold = line.split()[0]
+	start = line.split()[1]
+	end = line.split()[2]
+	introgression_class = line.split()[4]
+	
+	window_coordinates = scaffold + "\t" + start + "\t" + end + "\n"
+	
+	if introgression_class == '1':
+		output_1.write(window_coordinates)
+		
+	elif introgression_class == '2':
+		output_2.write(window_coordinates)
+
+# Close all files
+Windows_file.close()
+output_1.close()
+output_2.close()
+```
