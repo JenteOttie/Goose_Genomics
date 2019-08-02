@@ -143,7 +143,7 @@ Next, I can check which genes are in the introgressed windows, using the script 
 
 **Analyzing the results: Summary Statistics**
 
-To get an idea of the summary statistics for the different windows, we can plot them. First, we collect the summary stats data for all windows. This can be found in the map featureVectorsToClassify. I put all the data in one file using this command
+To get an idea of the summary statistics for the different windows, we can plot them. First, we collect the summary stats data for all windows. The stats for all scaffolds can be found in the map featureVectorsToClassify. I put all the data in one file using this command.
 ```
 for f in featureVectorsToClassify/NW_01318*/* ; do cat $f >>Window_Stats.txt ; done
 ```
@@ -204,7 +204,6 @@ Before I can plot the summary statistics in R, I need to change a few things.
 sed '-e s/\./,/g' -e 's/inf/NA/g' -e 's/-nan/NA/g' Window_Stats_Classification.txt > Temp.txt
 rm Window_Stats_Classification.txt
 mv Temp.txt Window_Stats_Classification.txt
-
 ```
 Now, I can plot different summary stats in R to compare the introgression-classes. During the data-processing, I saved the Window_Stats_Classification-file in Excel-format. This is not necessary, it should also work with a standard txt-file.
 ```R
