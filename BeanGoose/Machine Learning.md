@@ -103,6 +103,8 @@ The results-file contains the following information (in separate columns)
 7. The posterior probability of class one
 8. The posterior probability of class two
 
+&nbsp;
+
 **Analyzing the results: Gene content**
 
 The number of windows per class can be calculated using this short Python-script (Sort_Introgressed_Windows.py)
@@ -136,6 +138,8 @@ output_1.close()
 output_2.close()
 ```
 Next, I can check which genes are in the introgressed windows, using the script [Genes_in_Windows.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/Genes_in_Windows.py). This script takes two inputs: the file with the windows and a GFF-file with the gene coordinates (which can be found [here](https://www.ncbi.nlm.nih.gov/genome/?term=txid8845[orgn]) for the goose genome). The resulting lists can be run through a [GO-term-analysis](http://geneontology.org/).
+
+&nbsp;
 
 **Analyzing the results: Summary Statistics**
 
@@ -223,8 +227,10 @@ ggplot(All_Windows, aes(x=Class, y=dxy_mean)) +
 ```
 If necessary, I can also test for significant differences between the introgression classes with a Kruskal-Wallis and a post-hoc Tukey test.
 ```R
-# Librabry for Tukey test
+# Library for Tukey test
 library(DescTools)
+
+# Statistical tests
 kruskal.test(All_Windows$dxy_mean ~ All_Windows$Class)
 NemenyiTest(x = All_Windows$dxy_mean, g = All_Windows$Class, dist="tukey")
 ```
