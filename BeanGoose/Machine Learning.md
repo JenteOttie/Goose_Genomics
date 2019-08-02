@@ -193,3 +193,38 @@ for line in Windows_file:
 Windows_file.close()
 output.close()
 ```
+Before I can plot the summary statistics in R, I need to change a few things.
+```
+# Replace "inf" and "-nan" with NA
+sed 's/inf/NA/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
+sed 's/-nan/NA/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
+# Replace . with , (R sees strings with a . as characters not numbers)
+sed 's/./,/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
+```
+Now, I can plot different summary stats in R to compare the introgression-classes.
+```R
+# Load libraries
+library(ggplot2)
+library(openxlsx)
+
+# Load Data
+All_Windows <- read.xlsx("G:/Data/Postdoc Uppsala/Analyses/Machine Learning/10kb_Windows/Window_Stats_Classification.xlsx")
+lapply(All_Windows, class) # Check if all the data are correct (should be numeric)
+All_Windows$Class <- as.factor(All_Windows$Class)
+
+# Remove introgression-class NA (=windows that could not be classified)
+All_Windows <- All_Windows[ which(All_Windows$Class !='NA'),]
+
+# Plot summary statistic of your choice
+ggplot(All_Windows, aes(x=Class, y=dxy_mean)) +
+  geom_boxplot() +
+  theme_bw() +
+  xlab("Introgression Class")
+```
+If necessary, I can also test for significant differences between the introgression classes with a Kruskal-Wallis and a post-hoc Tukey test.
+```R
+# Librabry for Tukey test
+library(DescTools)
+kruskal.test(All_Windows$dxy_mean ~ All_Windows$Class)
+NemenyiTest(x = All_Windows$dxy_mean, g = All_Windows$Class, dist="tukey")
+```
