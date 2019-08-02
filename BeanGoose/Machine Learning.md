@@ -14,9 +14,9 @@ Here is a link to the FILET-paper: https://journals.plos.org/plosgenetics/articl
 ## Simulating training datasets
 The algorithm needs to be trained. I will use simulated data as a training set. The data is simulated using [msmove](https://github.com/geneva/msmove).
 Three scenarios are simulated: 
-1.Introgression from population 1 to 2 
-2.Introgression from population 2 to 1 
-3.No Introgression
+1. Introgression from population 1 to 2 
+2. Introgression from population 2 to 1 
+3. No Introgression
 ```
 msmove 18 10000 -t 50 -I 2 9 9 -n 1 1.40176528 -n 2 0.6912292 -ma x 5.80351132 26.15397712 x -ev 0.14821583 1 2 1 >mig12.txt
 msmove 18 10000 -t 50 -I 2 9 9 -n 1 1.40176528 -n 2 0.6912292 -ma x 5.80351132 26.15397712 x -ev 0.14821583 2 1 1 >mig21.txt
