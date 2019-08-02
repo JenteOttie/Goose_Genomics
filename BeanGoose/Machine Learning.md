@@ -171,17 +171,22 @@ for line in Introgression_file:
 		Introgression2.append(window)
 Introgression_file.close()
 
+# Add header with all summary stats to file
+output.write("chrom\tchromStart\tchromEnd\tnumSites\tpi1\thetVar1\tss1\tprivate1\tthetaH1\ttajd1\t\tH1\tHapCount1\tZnS1\tpi2h\tetVar2ss2\tprivate2\tthetaH2\ttajd2\tH2\tHapCount2\tZnS2\tFst\tsnn\tdxy_mean\tdxy_min\tgmin\tzx\tdd1\tdd2\tddRank1\tddRank2\tibsMaxB\tibsMean1\tibsMean2\tClass")
+
+# Update stats-file with column on introgression-class
 for line in Windows_file:
 	data = line.split()
 	window = data[0] + ":" + data[1] + "-" + data[2]
-	if window in Introgression1:
+
+	if window in Introgression1: # Class 1
 		output.write(line.rstrip())
 		output.write("\t1\n")
-	elif window in Introgression2:
+	elif window in Introgression2: # Class 2
 		output.write(line.rstrip())
 		output.write("\t2\n")
 	else:
-		if "chrom" not in line:
+		if "chrom" not in line: # Class 0
 			output.write(line.rstrip())
 			output.write("\t0\n")
  
