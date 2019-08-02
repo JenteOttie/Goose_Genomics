@@ -206,14 +206,14 @@ rm Window_Stats_Classification.txt
 mv Temp.txt Window_Stats_Classification.txt
 
 ```
-Now, I can plot different summary stats in R to compare the introgression-classes.
+Now, I can plot different summary stats in R to compare the introgression-classes. During the data-processing, I saved the Window_Stats_Classification-file in Excel-format. This is not necessary, it should also work with a standard txt-file.
 ```R
 # Load libraries
 library(ggplot2)
 library(openxlsx)
 
 # Load Data
-All_Windows <- read.xlsx("G:/Data/Postdoc Uppsala/Analyses/Machine Learning/10kb_Windows/Window_Stats_Classification.xlsx")
+All_Windows <- read.xlsx("Window_Stats_Classification.xlsx")
 lapply(All_Windows, class) # Check if all the data are correct (should be numeric)
 All_Windows$Class <- as.factor(All_Windows$Class)
 
