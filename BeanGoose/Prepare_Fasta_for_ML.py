@@ -7,6 +7,8 @@
         # Anser fabalis samples -> fabalis.fa
         # Anser serrirostris samples -> rossicus.fa
 
+import re
+
 ############################################################
 ### STEP 1 - Choose scaffold and window size (automate later) ###
 Scaffold_Names_File = open("Scaffolds.txt", "r")
@@ -41,7 +43,8 @@ for scaffold  in Scaffold_Names_File:
                         sequence = line
 
                         if scaffold_name in header:
-                                Anc_file.write(sequence)
+                                sequence_with_Ns = re.sub('[a-z]', 'N', sequence) # Replace lower case nucleotides with Ns
+                                Anc_file.write(sequence_with_Ns)
 
         Reference.close()
         Anc_file.close()
@@ -65,7 +68,8 @@ for scaffold  in Scaffold_Names_File:
                                 sequence = line
 
                                 if scaffold_name in header:
-                                        Fabalis_out.write(sequence)
+                                        sequence_with_Ns = re.sub('[a-z]', 'N', sequence) # Replace lower case nucleotides with Ns
+                                        Fabalis_out.write(sequence_with_Ns)
 
                 Fabalis_in.close()
                 Fabalis_out.close()
@@ -89,9 +93,10 @@ for scaffold  in Scaffold_Names_File:
                                 sequence = line
 
                                 if scaffold_name in header:
-                                        Rossicus_out.write(sequence)
+                                        sequence_with_Ns = re.sub('[a-z]', 'N', sequence) # Replace lower case nucleotides with Ns
+                                        Rossicus_out.write(sequence_with_Ns)
 
                 Rossicus_in.close()
                 Rossicus_out.close()
 
-Scaffold_Names_File.close()
+Scaffold_Names_File.close(
