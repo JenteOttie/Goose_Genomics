@@ -1,4 +1,4 @@
-# Finding introgression regions using a Machine Learning approach
+# Finding introgressed regions using a Machine Learning approach
 ## Background
 In the previous step - demographic analysis - I showed that Taiga and Tundra Bean Goose have exchanged DNA during their evolutionary history.
 To explore which genomic regions have been exchanged, I will apply a machine learning approach: FILET (Finding Introgressed Loci via Extra-Trees).
@@ -103,7 +103,7 @@ The results-file contains the following information (in separate columns)
 7. The posterior probability of class one
 8. The posterior probability of class two
 
-**Analyzing the results**
+**Analyzing the results: Gene content**
 
 The number of windows per class can be calculated using this short Python-script (Sort_Introgressed_Windows.py)
 ```Python
@@ -114,6 +114,7 @@ Windows_file = open(sys.argv[1], "r")
 output_1 = open("Introgression_Class1.txt", "a")
 output_2 = open("Introgression_Class2.txt", "a")
 
+# Put introgressed windows in separate files
 for line in Windows_file:
 	# extract information about window and introgression class
 	scaffold = line.split()[0]
@@ -134,4 +135,56 @@ Windows_file.close()
 output_1.close()
 output_2.close()
 ```
-Next, I can check which genes are in the introgressed windows, using the script [Genes_in_Windows.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/Genes_in_Windows.py). This script takes two inputs: the file with the windows and a GFF-file with the gene coordinates (which can be found [here](https://www.ncbi.nlm.nih.gov/genome/?term=txid8845[orgn]) for the goose genome).
+Next, I can check which genes are in the introgressed windows, using the script [Genes_in_Windows.py](https://github.com/JenteOttie/Goose_Genomics/blob/master/Genes_in_Windows.py). This script takes two inputs: the file with the windows and a GFF-file with the gene coordinates (which can be found [here](https://www.ncbi.nlm.nih.gov/genome/?term=txid8845[orgn]) for the goose genome). The resulting lists can be run through a [GO-term-analysis](http://geneontology.org/).
+
+**Analyzing the results: Summary Statistics**
+
+To get an idea of the summary statistics for the different windows, we can plot them. First, we collect the summary stats data for all windows. This can be found in the map featureVectorsToClassify. I put all the data in one file using this command
+```
+for f in featureVectorsToClassify/NW_01318*/* ; do cat $f >>Window_Stats.txt ; done
+```
+Next, I use the Python-script Update_Introgressed_Windows.py to assign each window to the right introgression-class. This script takes two inputs: the file with all windows (Window_Stats.txt) and the file with the classified windows (Results.txt).
+```Python
+# Script to label introgressed regions based on Machine Learning analysis
+# Written by Jente Ottenburghs on 2019-06-04
+
+import sys
+
+# Input files
+# 1 = file with all windows
+# 2 = file with introgressed windows
+
+# Open input and output-file
+Windows_file = open(sys.argv[1], "r")
+output = open("Window_Stats_Classification.txt", "a")
+
+# Put introgressed windows into a list. This will later be used to compare with the gene file.
+Introgression_file = open(sys.argv[2], "r")
+Introgression1 = []
+Introgression2 = []
+for line in Introgression_file:
+	data = line.split()
+	window = data[0] + ":" + data[1] + "-" + data[2]
+	if data[4] == '1':
+		Introgression1.append(window)
+	elif data[4] == '2':
+		Introgression2.append(window)
+Introgression_file.close()
+
+for line in Windows_file:
+	data = line.split()
+	window = data[0] + ":" + data[1] + "-" + data[2]
+	if window in Introgression1:
+		output.write(line.rstrip())
+		output.write("\t1\n")
+	elif window in Introgression2:
+		output.write(line.rstrip())
+		output.write("\t2\n")
+	else:
+		if "chrom" not in line:
+			output.write(line.rstrip())
+			output.write("\t0\n")
+ 
+Windows_file.close()
+output.close()
+```
