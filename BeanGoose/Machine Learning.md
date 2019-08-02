@@ -217,7 +217,7 @@ lapply(All_Windows, class) # Check if all the data are correct (should be numeri
 All_Windows$Class <- as.factor(All_Windows$Class)
 
 # Remove introgression-class NA (=windows that could not be classified)
-All_Windows <- All_Windows[ which(All_Windows$Class !='NA'),]
+All_Windows <- All_Windows[ which(All_Windows$Class != 'NA'),]
 
 # Plot summary statistic of your choice
 ggplot(All_Windows, aes(x=Class, y=dxy_mean)) +
