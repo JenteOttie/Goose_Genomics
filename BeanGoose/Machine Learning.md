@@ -199,11 +199,12 @@ output.close()
 ```
 Before I can plot the summary statistics in R, I need to change a few things.
 ```
-# Replace "inf" and "-nan" with NA
-sed 's/inf/NA/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
-sed 's/-nan/NA/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
-# Replace . with , (R sees strings with a . as characters not numbers)
-sed 's/./,/g' Window_Stats_Classification.txt > Window_Stats_Classification.txt
+# Replace . with , (R sees strings with a . as characters not numbers) - First sed-command
+# Replace "inf" and "-nan" with NA - Second and third sed-commands
+sed '-e s/\./,/g' -e 's/inf/NA/g' -e 's/-nan/NA/g' Window_Stats_Classification.txt > Temp.txt
+rm Window_Stats_Classification.txt
+mv Temp.txt Window_Stats_Classification.txt
+
 ```
 Now, I can plot different summary stats in R to compare the introgression-classes.
 ```R
