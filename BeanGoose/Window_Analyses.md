@@ -14,14 +14,14 @@ vcftools --vcf BeanGoose.SNPs.HardFilt.vcf --weir-fst-pop Fabalis.txt --weir-fst
 &nbsp;
 
 ## Calculating pi and Dxy
-To estimate pi and Dxy, I use the script by Simon Martin which can be found [here](https://github.com/simonhmartin/genomics_general).
+To estimate pi and Dxy, I use python-scripts written by Simon Martin, which can be found [here](https://github.com/simonhmartin/genomics_general).
 First, I convert the VCF-file into the proper format.
 ```
 python parseVCF.py -i BeanGoose.SNPs.HardFilt.vcf --skipIndels --minQual 30 --gtf flag=DP min=10 | gzip > BeanGoose.geno.gz
 ```
-Next, I can calculate the summary statistics.
+Next, I can calculate the summary statistics. Example here is for 10kb windows with a minimum of 100 SNPs per window.
 ```
-python popgenWindows.py --windType coordinate -w 10000 -m 10 -g BeanGoose.geno.gz -o BeanGoose_10kb.csv -T 8 -f phased -p Fabalis -p Rossicus --popsFile Populations.txt
+python popgenWindows.py --windType coordinate -w 10000 -m 100 -g BeanGoose.geno.gz -o BeanGoose_10kb.csv -T 8 -f phased -p Fabalis -p Rossicus --popsFile Populations.txt
 ```
 
 &nbsp;
