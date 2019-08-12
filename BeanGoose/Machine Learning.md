@@ -20,6 +20,11 @@ module load samtools/1.8
 module load bcftools/1.8
 ml seqtk/1.2-r101
 
+#Input files
+filename=$1
+ind=$(basename $filename .recal.realn.marked.bam)
+fasta=/proj/sllstore2017033/nobackup/work/jente/Reference_Genome/ansCyg.fa
+
 # Generate Fastq-file
 samtools mpileup -uf $fasta $1 | bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 60 >$ind.fq
 
