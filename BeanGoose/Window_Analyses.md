@@ -103,55 +103,73 @@ multiplot(Fst, Dxy, Pi_Fa, Pi_Ro, cols = 4)
 # Fst vs. Dxy
 correlation<-cor.test(All_Data$Fst, All_Data$Dxy, method = "spearman", exact = FALSE)
 Fst_vs_Dxy <- ggplot(All_Data, aes(x=Fst, y=Dxy)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
-  annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 27))) +
-  annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
+  xlim(0,0.45) +
+  ylim(0,0.45) +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
+  annotate('text', x=0.35, y=0.05, cex=2, label="p-value < 2.2e-16 ") +
+  annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2))) 
 
 # Fst vs. Pi_Fa
 correlation<-cor.test(All_Data$Fst, All_Data$Pi_Fa, method = "spearman", exact = FALSE)
 Fst_vs_Pi_Fa <- ggplot(All_Data, aes(x=Fst, y=Pi_Fa)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
+  xlim(0,0.45) +
+  ylim(0,0.45) +
   ylab("\u03C0 (Anser fabalis)") +
-  annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 51))) +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
+  annotate('text', x=0.35, y=0.05, cex=2, label="p-value < 2.2e-16 ") +
   annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
 
 # Fst vs. Pi_Ro
 correlation<-cor.test(All_Data$Fst, All_Data$Pi_Ro, method = "spearman", exact = FALSE)
 Fst_vs_Pi_Ro <- ggplot(All_Data, aes(x=Fst, y=Pi_Ro)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
+  xlim(0,0.45) +
+  ylim(0,0.45) +
   ylab("\u03C0 (Anser serrirostris)") +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
   annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 2))) +
   annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
 
 # Dxy vs. Pi_Fa
 correlation<-cor.test(All_Data$Dxy, All_Data$Pi_Fa, method = "spearman", exact = FALSE)
 Dxy_vs_Pi_Fa <- ggplot(All_Data, aes(x=Dxy, y=Pi_Fa)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
+  xlim(0,0.45) +
+  ylim(0,0.45) +
   ylab("\u03C0 (Anser fabalis)") +
-  annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 2))) +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
+  annotate('text', x=0.35, y=0.05, cex=2, label="p-value < 2.2e-16 ") +
   annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
 
 # Dxy vs. Pi_Ro
 correlation<-cor.test(All_Data$Dxy, All_Data$Pi_Ro, method = "spearman", exact = FALSE)
 Dxy_vs_Pi_Ro <- ggplot(All_Data, aes(x=Dxy, y=Pi_Ro)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
+  xlim(0,0.45) +
+  ylim(0,0.45) +
   ylab("\u03C0 (Anser serrirostris)") +
-  annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 2))) +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
+  annotate('text', x=0.35, y=0.05, cex=2, label="p-value < 2.2e-16 ") +
   annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
 
 # Pi_Fa vs. Pi_Ro
 correlation<-cor.test(All_Data$Pi_Fa, All_Data$Pi_Ro, method = "spearman", exact = FALSE)
 Pi_Fa_vs_Pi_Ro <- ggplot(All_Data, aes(x=Pi_Fa, y=Pi_Ro)) +
-  geom_point() +
+  geom_point(size=1) +
   theme_bw() +
+  xlim(0,0.45) +
+  ylim(0,0.45) +
   xlab("\u03C0 (Anser fabalis)") +
   ylab("\u03C0 (Anser serrirostris)") +
-  annotate('text', x=0.35, y=0.05, cex=2, label=paste("p-value = ", round(correlation$p.value, 2))) +
+  annotate('rect', xmin = 0.3, xmax = 0.4, ymin = 0.02, ymax = 0.06, fill="lightblue", color="black") +
+  annotate('text', x=0.35, y=0.05, cex=2, label="p-value < 2.2e-16 ") +
   annotate('text', x=0.35, y=0.03, cex=2, label=paste("\u03C1 = ", round(correlation$estimate, 2)))
 
 # Put it all together
