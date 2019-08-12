@@ -11,6 +11,24 @@ Here is a link to the FILET-paper: https://journals.plos.org/plosgenetics/articl
 
 &nbsp;
 
+## Generating Fasta-files
+The fasta-files are generated in two steps. First, a fastq-file is made from a BAM-file. Next, this fastq-file is converted into a fasta-file using seqtk version 1.2.
+```
+# load modules
+module load bioinfo-tools
+module load samtools/1.8
+module load bcftools/1.8
+ml seqtk/1.2-r101
+
+# Generate Fastq-file
+samtools mpileup -uf $fasta $1 | bcftools call -c | vcfutils.pl vcf2fq -d 5 -D 60 >$ind.fq
+
+# Convert to fasta-format
+seqtk seq -a $ind.fq >$ind.fa
+```
+
+&nbsp;
+
 ## Simulating training datasets
 The algorithm needs to be trained. I will use simulated data as a training set. The data is simulated using [msmove](https://github.com/geneva/msmove).
 Three scenarios are simulated: 
