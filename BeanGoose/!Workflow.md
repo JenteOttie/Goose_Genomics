@@ -12,7 +12,7 @@ This pipeline is described in the [Data_Processing](https://github.com/JenteOtti
 
 ## Population Structure: PCA and Admixture
 
-To assess the population structure of the Bean Geese, I will make PCAs and Admixture plots using different settings to filter the SNPs generated in the previous step. The filtering will be done using Plink version 1.07 and VCFtools version 0.1.15.
+To assess the population structure of the Bean Geese, I made PCAs and Admixture plots using different settings to filter the SNPs generated in the previous step. The filtering were done using Plink version 1.07 and VCFtools version 0.1.15.
 
 The workflow for generating the PCA-plots can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/PCA.md). 
 Changing the filtering parameters does not markedly influence the patterns in the PCA. With a more strict filtering (and thus less SNPs), the two species remain distinct. However, there is less structure within the species after strict filtering.
@@ -23,7 +23,9 @@ The workflow for generating the Admixture-plots can be found here.
 
 ## Window Analyses
 
-Summary statistics calculated in windows of different sizes (10kb, 20kb, 200kb).
+Summary statistics - Fst, Dxy and Pi - were calculated in windows of different sizes (10kb, 20kb, 50kb, 100kb and 200kb). The distribution of these statistics was vizualised in violin-plots (with boxplots inside). Correlations between summary statistics were calculated with a Spearman correlation. Strong correlations between Dxy and pi suggest that linked selection influences the genomic landscape of these geese.
+
+The complete workflow for these analyses can be found here.
 
 &nbsp;
 
