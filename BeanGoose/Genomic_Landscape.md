@@ -33,7 +33,7 @@ python popgenWindows.py --windType coordinate -w 200000 -m 100 -g BeanGoose.geno
 &nbsp;
 
 ## Mapping Scaffolds to Chicken Genome
-I used LASTZ version 1.04.00 to map all goose scaffolds to the Chicken genome. This software takes two fasta-files as input and outputs the location of all scaffolds on the genome. the parameters were tuned by Linnea Smeds and Alexander Suh for aligning bird species.
+I used LASTZ version 1.04.00 to map all goose scaffolds to the Chicken genome. This software takes two fasta-files as input and outputs the location of all scaffolds on the genome. The parameters were tuned by Linnea Smeds and Alexander Suh for aligning bird species.
 ```
 GOOSE=ansCyg.fa
 REF=galGal6.fa
