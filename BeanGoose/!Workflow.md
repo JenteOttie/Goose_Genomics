@@ -25,13 +25,13 @@ The workflow for generating the Admixture-plots can be found here.
 
 Summary statistics - Fst, Dxy and Pi - were calculated in windows of different sizes (10kb, 20kb, 50kb, 100kb and 200kb). The distribution of these statistics was vizualised in violin-plots (with boxplots inside). Correlations between summary statistics were calculated with a Spearman correlation. Strong correlations between Dxy and pi suggest that linked selection influences the genomic landscape of these geese.
 
-The complete workflow for these analyses can be found here.
+The complete workflow for these analyses can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/Window_Analyses.md).
 
 &nbsp;
 
 ## The Genomic landscape
 
-Visualising the genomic landscape based on 200kb windows.
+To visualize the genomic landscape of differentation, I plotted three summary statistics (Fst, Dxy and pi, calculating in the previous step) on a chromosome level. Because there is no chromosome-level assembly available for geese, I mapped all scaffolds to the Chicken (*Gallus gallus*) genome. The code and scripts to do this can be found here.
 
 &nbsp;
 
