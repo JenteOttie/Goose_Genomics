@@ -31,7 +31,9 @@ The complete workflow for these analyses can be found [here](https://github.com/
 
 ## The Genomic landscape
 
-To visualize the genomic landscape of differentation, I plotted three summary statistics (Fst, Dxy and pi, calculating in the previous step) on a chromosome level. Because there is no chromosome-level assembly available for geese, I mapped all scaffolds to the Chicken (*Gallus gallus*) genome. The code and scripts to do this can be found here.
+To visualize the genomic landscape of differentation, I plotted three summary statistics (Fst, Dxy and pi, calculating in the previous step) on a chromosome level. Because there is no chromosome-level assembly available for geese, I mapped all scaffolds to the Chicken (*Gallus gallus*) genome. 
+
+The code and scripts to do this can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/Genomic_Landscape.md).
 
 &nbsp;
 
