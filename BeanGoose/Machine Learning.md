@@ -261,7 +261,7 @@ NemenyiTest(x = All_Windows$dxy_mean, g = All_Windows$Class, dist="tukey")
 &nbsp;
 
 ## Comparing result with another statistic
-To check the reliability and benefit of using a machine learning approach over other statistics to find introgressed regions, I will compare the machine learning result with Gmim. This statistic was introduced by Anthony Geneva and colleagues (see paper [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118621)) and is essentially the ratio between the minimum and mean Dxy. A low ratio points to introgression.
+To check the reliability and benefit of using a machine learning approach over other statistics to find introgressed regions, I will compare the machine learning result with Gmin. This statistic was introduced by Anthony Geneva and colleagues (see paper [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118621)) and is essentially the ratio between the minimum and mean Dxy. A low ratio points to introgression.
 
 Gmin is calculated during the machine learning analyses, so I can just use that data. To set a significance threshold, I use the Gmin from simulated data (see above) and compare the distribution of a scenario without gene flow with my results. This is done with the R-script below.
 ```R
