@@ -257,3 +257,61 @@ library(DescTools)
 kruskal.test(All_Windows$dxy_mean ~ All_Windows$Class)
 NemenyiTest(x = All_Windows$dxy_mean, g = All_Windows$Class, dist="tukey")
 ```
+
+&nbsp;
+
+## Comparing result with another statistic
+To check the reliability and benefit of using a machine learning approach over other statistics to find introgressed regions, I will compare the machine learning result with Gmim. This statistic was introduced by Anthony Geneva and colleagues (see paper [here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118621)) and is essentially the ratio between the minimum and mean Dxy. A low ratio points to introgression.
+
+Gmin is calculated during the machine learning analyses, so I can just use that data. To set a significance threshold, I use the Gmin from simulated data (see above) and compare the distribution of a scenario without gene flow with my results. This is done with the R-script below.
+```R
+library(openxlsx)
+
+#################
+### Load Data ###
+#################
+
+# Data
+Introgression <- read.xlsx("G:/Data/Postdoc Uppsala/Analyses/Machine Learning/Window_Stats_Classification.xlsx")
+Introgression <- Introgression[ which(Introgression$Class != 'NA'),] # Remove unclassified windows
+
+# Simulations
+Sims <- read.table("G:/Data/Postdoc Uppsala/Analyses/Machine Learning/Simulations_noMig.txt", header = TRUE)
+
+################
+### Plotting ###
+################
+
+# Density plot
+# 1. Prepare data for plotting
+## Gmin from data
+Gmin_data <- as.data.frame(Introgression[,27])
+Gmin_data$Class <- c(rep("1", length(Gmin_data)))
+colnames(Gmin_data) <- c("Gmin", "Class")
+
+## Gmin from simulations
+Gmin_sim <- as.data.frame(Sims[,23])
+Gmin_sim$Class <- c(rep("2", length(Gmin_sim)))
+colnames(Gmin_sim) <- c("Gmin", "Class")
+
+## Combine both datasets
+Gmin_All <- rbind(Gmin_data, Gmin_sim)
+
+# 2. Plot
+ggplot(Gmin_All, aes(x = Gmin, fill=Class)) +
+  geom_density() +
+  theme_bw()
+
+# 3. Extract significant windows
+## Set threshold = 2 * standard deviation of simulated data
+threshold <- 2*sd(Gmin_sim$Gmin, na.rm = TRUE)
+
+## Get windows below threshold
+Gmin_low <- Introgression[which(Introgression$gmin < threshold),]
+nrow(Gmin_low)
+
+## Save window coordinates
+Gmin_Windows <- Gmin_low[,c(1,2,3)]
+colnames(Gmin_Windows) <- c("chrom", "start", "end")
+write.table(Gmin_Windows, "G:/Data/Postdoc Uppsala/Analyses/Machine Learning/Gmin_Windows.txt", row.names = FALSE)
+```
