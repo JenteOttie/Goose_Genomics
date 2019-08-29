@@ -39,7 +39,7 @@ The code and scripts to do this can be found [here](https://github.com/JenteOtti
 
 ## Demographic analyses
 
-Reconstructing the evolutionary history using dadi.
+Reconstructing the evolutionary history using dadi. The entire workflow can be found [here](https://github.com/JenteOttie/Goose_Genomics/blob/master/BeanGoose/Demography.md).
 
 &nbsp;
 
