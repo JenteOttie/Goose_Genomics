@@ -43,12 +43,13 @@ java -Xmx4g -jar snpEff/snpEff.jar -v ansCyg1 mydata.vcf >test.annotated.vcf
 ```
 
 **Filtering SNPs**
+
 For the demographic modelling, I will only use non-coding SNPs. So, I will have to remove all SNPs in coding regions. This can be done with the grep comment for multiple strings. This command will remove all the coding SNPs.
 ```
 grep -v '3_prime_UTR_variant\|5_prime_UTR_premature_start_codon_gain_variant\|5_prime_UTR_variant\|initiator_codon_variant\|intragenic_variant\|missense_variant\|non_coding_transcript_exon_variant\|splice_acceptor_variant\|splice_donor_variant\|splice_region_variant\|start_lost\|stop_gained\|stop_lost\|stop_retained_variant\|synonymous_variant' BeanGoose_Filtered_Annotated.vcf >BeanGoose_Filtered_NonCoding.vcf
 ```
 
-The remaining 12,114,494 SNPs will be filtered based on Hardy-Weinberg equilibrium (hwe), minor allele frequency (maf) and linkage disequilibrium (LD) using vcftools and plink. Make sure you use the right input-files for each step (for simplicity I just used mydata and result).
+The remaining 12,114,494 SNPs will be filtered based on Hardy-Weinberg equilibrium (hwe), minor allele frequency (maf) and linkage disequilibrium (LD) using vcftools and plink. Make sure you use the right input-files for each step (for simplicity I just used mydata and result in the code below).
 
 ```
 # Only use biallelic SNPs
