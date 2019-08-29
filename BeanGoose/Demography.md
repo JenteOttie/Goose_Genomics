@@ -78,7 +78,7 @@ Dadi is based on Python-scripts. For these analyses, I need to start a virtual e
 ```
 source dadi/bin/activate
 ```
-Here is an example of a Python-script to run a model of solation with asymmetrical migration.
+Here is an example of a Python-script to run a model of isolation with asymmetrical migration. I will test a range of different scenarios for the Bean Geese.
 ```python
 # Python-script to test demographic models using dadi.
 # Run this script in virtual environment
