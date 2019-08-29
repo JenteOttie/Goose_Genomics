@@ -70,3 +70,86 @@ plink --bfile mydata --recode vcf --out result
 perl Convert_vcf_to_dadi.pl mydata.vcf Populations.txt
 ```
 This leads to a final dataset of 5,397,934 SNPs.
+
+&nbsp;
+
+## Demographic Modelling
+Dadi is based on Python-scripts. For these analyses, I need to start a virtual environment.
+```
+source dadi/bin/activate
+```
+Here is an example of a Python-script to run a model of solation with asymmetrical migration.
+```python
+# Python-script to test demographic models using dadi.
+# Run this script in virtual environment
+
+# Import necessary packages
+import numpy
+import dadi
+
+# Load the dataset
+# File created with Perl-script Convert_vcf_to_dadi.pl
+dd = dadi.Misc.make_data_dict('/proj/sllstore2017033/nobackup/work/jente/Bean_Goose_Project/Modelling/Dadi/BeanGoose_Filtered_NonCoding_TwoAlleles_hwe_maf_LD_0.5.vcf.data')
+
+# Convert dictionary into Spectrum.
+# Projections indicates sample size per population
+# Polarized=False indicates that SNPs are not polarized with an outgroup. (i.e. spectrum is folded)
+fs = dadi.Spectrum.from_data_dict(dd, pop_ids=['Fabalis','Rossicus'],
+                            projections=[9,9],
+                            polarized=False)
+
+print('Data successfully loaded and converted to spectrum')
+
+ns = [9,9]
+
+###########################################################
+# MODEL B - Isolation with asymmetrical migration
+print('Running Model B: Isolation with asymmetrical migration')
+
+def model_B(params, ns, pts):
+    nu1, nu2, Ts, mBG, mGB = params
+
+    xx = dadi.Numerics.default_grid(pts)
+
+    phi = dadi.PhiManip.phi_1D(xx)
+    phi = dadi.PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = dadi.Integration.two_pops(phi, xx, Ts, nu1, nu2, m12=mBG, m21=mGB)
+
+    fs = dadi.Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+# Set bounds to parameters: nu1, nu2, Ts, m12, m21
+upper_bound = [100, 100, 50, 50, 50]
+lower_bound = [0.1, 0.1, 0, 0, 0]
+p0 = [1, 1, 10, 15, 15]
+
+# Set grid size
+pts_l = [40,50,60]
+
+# Prepare function
+func = model_B
+func_ex = dadi.Numerics.make_extrap_log_func(func)
+
+# Perturb our parameters before optimization.
+p0 = dadi.Misc.perturb_params(p0, fold=1, upper_bound=upper_bound,
+                              lower_bound=lower_bound)
+# Run optimization process
+print('Beginning optimization ************************************************')
+popt = dadi.Inference.optimize_log(p0,fs , func_ex, pts_l,
+                                   lower_bound=lower_bound,
+                                   upper_bound=upper_bound,
+                                   verbose=len(p0), maxiter=3)
+print('Finshed optimization **************************************************')
+
+print('Best-fit parameters: {0}'.format(popt))
+
+model = func_ex(popt, ns, pts_l)
+theta = dadi.Inference.optimal_sfs_scaling(model, fs)
+
+ll_model_B = dadi.Inference.ll_multinom(model, fs)
+
+print('LL Model B: '), round(ll_model_B,0)
+
+############################################################################
+```
