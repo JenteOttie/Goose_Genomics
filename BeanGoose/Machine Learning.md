@@ -41,9 +41,9 @@ Three scenarios are simulated:
 2. Introgression from population 2 to 1 
 3. No Introgression
 ```
-msmove 18 10000 -t 50 -I 2 9 9 -n 1 1.40176528 -n 2 0.6912292 -ma x 5.80351132 26.15397712 x -ev 0.14821583 1 2 1 >mig12.txt
-msmove 18 10000 -t 50 -I 2 9 9 -n 1 1.40176528 -n 2 0.6912292 -ma x 5.80351132 26.15397712 x -ev 0.14821583 2 1 1 >mig21.txt
-msmove 18 10000 -t 0.1 -I 2 9 9 0.0001 -n 1 1.40176528 -n 2 0.6912292 -ev 0.14821583 1 2 0 >Nomig.txt
+msmove 18 10000 -t 50 -I 2 9 9 -ej 7.18178442 1 2 -n 1 1.36332504 -n 2 0.67531299 -ma x 5.779383 29.213520 x -ev 0.165138 1 2 0.5 >mig12.txt
+msmove 18 10000 -t 50 -I 2 9 9 -ej 7.18178442 1 2 -n 1 1.36332504 -n 2 0.67531299 -ma x 5.779383 29.213520 x -ev 0.165138 2 1 0.5 >mig21.txt
+msmove 18 10000 -t 50 -I 2 9 9 -ej 7.18178442 1 2 -n 1 1.36332504 -n 2 0.67531299 -ma x 5.779383 29.213520 x -ev 0.165138 1 2 0 >Nomig.txt
 ```
 The parameters are listed below. All numbers are based on the demographic model in the previous step.
 - -t (theta)
@@ -52,6 +52,7 @@ The parameters are listed below. All numbers are based on the demographic model 
 - -n 2 (size of pop2)
 - -ma (matrix with migration rates)
 - -ev (time of migration) (source pop) (sink pop) (likelihood of migration event)
+- -ej (time of split) (pop1) (pop2)
 
 &nbsp;
 
