@@ -19,7 +19,7 @@ vcftools --vcf BeanGoose.SNPs.HardFilt.vcf --weir-fst-pop Fabalis.txt --weir-fst
 ```
 
 ### Calculating Dxy and Pi
-To estimate pi and Dxy, I use python-scripts written by Simon Martin, which can be found [here](https://github.com/simonhmartin/genomics_general). Important to keep in mind: these scripts need Python2.7 (running it with newer versions does not work).
+To estimate pi and Dxy, I use python-scripts written by Simon Martin, which can be found [here](https://github.com/simonhmartin/genomics_general). Important to keep in mind: these scripts need ***Python2.7*** (running it with newer versions does not work).
 
 First, I convert the VCF-file into the proper format, only using SNPs with a minumum quality of 30 and a read depth of 10x.
 ```
