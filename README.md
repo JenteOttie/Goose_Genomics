@@ -16,7 +16,7 @@ Here is an overview of the samples
 - Barnacle Goose (*Brana leucopsis*) - 5 samples
 
 ## Genomic Analyses
-These samples were all mapped to the Swan Goose (*Anser cygnoides*) genome and SNPs were called using the GATK best practises. Resulting BAM-files and GVCF-files have been stored on the UPPMAX supercomputer. This [page](https://github.com/JenteOttie/Goose_Genomics/blob/master/Data_Processing.md) walks you through the whole process
+These samples were all mapped to the Swan Goose (*Anser cygnoides*) genome and SNPs were called using the GATK best practises pipeline. Resulting BAM-files and GVCF-files have been stored on the UPPMAX supercomputer. This [page](https://github.com/JenteOttie/Goose_Genomics/blob/master/Data_Processing.md) walks you through the whole process
 
 This project involved two main topics:
 - Evolution of Taiga and Tundra Bean Goose (see [here](https://github.com/JenteOttie/Goose_Genomics/tree/master/BeanGoose))
